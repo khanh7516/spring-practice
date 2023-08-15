@@ -15,7 +15,7 @@ public class JobController {
 
     private final List<Job> jobs = new ArrayList<>();
 
-    @GetMapping
+    @GetMapping("")
     public List<Job> getAllJobs() {
         return jobs;
     }
@@ -26,14 +26,14 @@ public class JobController {
         return foundJob.map(job -> ResponseEntity.ok().body(job)).orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping
+    @PostMapping("")
     public ResponseEntity<String> createJob(@RequestBody Job job) {
-        job.setId(UUID.randomUUID().toString()); //Tạo id không trùng lặp
+        job.setId(UUID.randomUUID().toString()); //Tạo id không trùng lặp rồi đưa về kiểu string
         jobs.add(job);
         return ResponseEntity.status(HttpStatus.CREATED).body(job.getId());
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("{id}")
     public ResponseEntity<Void> updateJob(@PathVariable String id, @RequestBody Job updatedJob) {
         Optional<Job> foundJob = jobs.stream().filter(job -> job.getId().equals(id)).findFirst();
         if (foundJob.isPresent()) {
@@ -50,7 +50,7 @@ public class JobController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteJob(@PathVariable String id) {
         Optional<Job> foundJob = jobs.stream().filter(job -> job.getId().equals(id)).findFirst();
         if (foundJob.isPresent()) {
@@ -61,7 +61,7 @@ public class JobController {
         }
     }
 
-    @GetMapping("/random")
+    @GetMapping("random")
     public ResponseEntity<Job> getRandomJob() {
         if (jobs.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -70,7 +70,7 @@ public class JobController {
         return ResponseEntity.ok(jobs.get(randomIndex));
     }
 
-    @GetMapping("/sort")
+    @GetMapping("sort")
     public ResponseEntity<List<Job>> sortJobsByMaxSalary(@RequestParam("max_salary") String sortOrder) {
         List<Job> sortedJobs = new ArrayList<>(jobs);
         if ("desc".equalsIgnoreCase(sortOrder)) {
