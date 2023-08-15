@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.Random;
 
 @RestController
-@RequestMapping("/random-color/")
+@RequestMapping("/random-color")
 public class ColorController {
 
     @GetMapping("")
