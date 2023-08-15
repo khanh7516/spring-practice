@@ -72,12 +72,12 @@ public class JobController {
 
     @GetMapping("sort")
     public ResponseEntity<List<Job>> sortJobsByMaxSalary(@RequestParam("max_salary") String sortOrder) {
-        List<Job> sortedJobs = new ArrayList<>(jobs);
-        if ("desc".equalsIgnoreCase(sortOrder)) {
+        List<Job> sortedJobs = new ArrayList<>(jobs); //copy mảng jobs
+        if ("desc".equalsIgnoreCase(sortOrder)) { //para = "desc" sắp xếp danh sách giảm dần theo lương tối đa
             sortedJobs.sort((job1, job2) -> job2.getMaxSalary() - job1.getMaxSalary());
-        } else {
+        } else { //ngược lại sắp xếp danh sách tăng dần theo lương tối đa
             sortedJobs.sort((job1, job2) -> job1.getMaxSalary() - job2.getMaxSalary());
         }
-        return ResponseEntity.ok(sortedJobs);
+        return ResponseEntity.ok(sortedJobs); //trả về danh sách jobs mới đã sắp xếp
     }
 }
