@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BMI</title>
+</head>
+<body>
+<h1>BMI</h1>
+
+<div>
+    <label for="height">Chieu cao (m):</label>
+    <input type="number" id="height" step="0.01" required>
+</div>
+
+<div>
+    <label for="weight">Can nang (kg):</label>
+    <input type="number" id="weight" step="0.01" required>
+</div>
+
+<button id="getBmiButton">Tinh BMI (GET)</button>
+<button id="postBmiButton">Tinh BMI (POST)</button>
+
+<div id="result"></div>
+
+<script>
+    const getBmiButton = document.getElementById("getBmiButton");
+    const postBmiButton = document.getElementById("postBmiButton");
+    const resultDiv = document.getElementById("result");
+    const heightInput = document.getElementById("height");
+    const weightInput = document.getElementById("weight");
+
+    getBmiButton.addEventListener("click", async () => {
+        const height = parseFloat(heightInput.value);
+        const weight = parseFloat(weightInput.value);
+
+        if (isNaN(height) || isNaN(weight) || height <= 0 || weight <= 0) {
+            alert("Chieu cao va can nang phai > 0");
+            heightInput.value = "";
+            weightInput.value = "";
+            return;
+        }
+
+        try {
+            const response = await fetch(`http://localhost:8081/bmi?height=${height}&weight=${weight}`);
+            const data = await response.text();
+            resultDiv.textContent = data;
+        } catch (error) {
+            resultDiv.textContent = "Da xay ra loi khi goi API";
+        }
+    });
+
+    postBmiButton.addEventListener("click", async () => {
+        const height = parseFloat(heightInput.value);
+        const weight = parseFloat(weightInput.value);
+
+        if (isNaN(height) || isNaN(weight) || height <= 0 || weight <= 0) {
+            alert("Chieu cao va can nang phai > 0");
+            heightInput.value = "";
+            weightInput.value = "";
+            return;
+        }
+
+        const requestData = {
+            height: height,
+            weight: weight
+        };
+
+        try {
+            const response = await fetch("http://localhost:8081/bmi", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(requestData)
+            });
+
+            const data = await response.text();
+            resultDiv.textContent = data;
+        } catch (error) {
+            resultDiv.textContent = "Da xay ra loi khi goi API";
+        }
+    });
+</script>
+</body>
+</html>

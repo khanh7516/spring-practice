@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Example</title>
+</head>
+<body>
+<div id="loginForm">
+    <input type="text" id="usernameInput" placeholder="Username">
+    <input type="password" id="passwordInput" placeholder="Password">
+    <button id="loginButton">Login</button>
+</div>
+<div id="userInfo" style="display: none;">
+    <p id="username"></p>
+    <p id="email"></p>
+    <img id="avatar" alt="Avatar">
+    <button id="logoutButton">Logout</button>
+</div>
+
+<script>
+    const loginForm = document.getElementById("loginForm");
+    const userInfo = document.getElementById("userInfo");
+    const usernameInput = document.getElementById("usernameInput");
+    const passwordInput = document.getElementById("passwordInput");
+    const loginButton = document.getElementById("loginButton");
+    const usernameElement = document.getElementById("username");
+    const emailElement = document.getElementById("email");
+    const avatarElement = document.getElementById("avatar");
+    const logoutButton = document.getElementById("logoutButton");
+
+    loginButton.addEventListener("click", async () => {
+        const username = usernameInput.value;
+        const password = passwordInput.value;
+
+        const response = await fetch('http://localhost:8081/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password })
+        });
+
+        if (response.ok) {
+            const user = await response.json();
+            usernameElement.textContent = "Username: " + user.username;
+            emailElement.textContent = "Email: " + user.email;
+            avatarElement.src = user.avatar;
+            loginForm.style.display = "none";
+            userInfo.style.display = "block";
+        } else {
+            alert("Username hoac password khong chinh xac");
+        }
+    });
+
+    logoutButton.addEventListener("click", () => {
+        loginForm.style.display = "block";
+        userInfo.style.display = "none";
+        usernameInput.value = "";
+        passwordInput.value = "";
+    });
+</script>
+</body>
+</html>

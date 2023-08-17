@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="217f3ed6-7bbe-4160-8c27-32344c3c5875" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../springboot-first-app/src/main/java/com/example/springbootfirstapp/SpringbootFirstAppApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../springboot-first-app/src/main/java/com/example/springbootfirstapp/SpringbootFirstAppApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../springboot-first-app/src/main/java/com/example/springbootfirstapp/model/BmiRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../springboot-first-app/src/main/java/com/example/springbootfirstapp/model/BmiRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../springboot-first-app/src/main/java/com/example/springbootfirstapp/model/Job.java" beforeDir="false" afterPath="$PROJECT_DIR$/../springboot-first-app/src/main/java/com/example/springbootfirstapp/model/Job.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,7 +34,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "E:/github/spring-practice/demo",
+    "last_opened_file_path": "E:/spring_prac/LearningSource/demo",
     "settings.editor.selected.configurable": "editor.preferences.appearance"
   }
 }]]></component>
