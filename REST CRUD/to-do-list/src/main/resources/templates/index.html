@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TodoList App</title>
+    <style>
+        li {
+            display: flex;
+            align-items: center;
+        }
+
+        span {
+            display: inline-block;
+            width: 15rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding: 0 2rem;
+
+        }
+
+        .checked {
+            color: red;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body>
+<h1>TodoList App</h1>
+<input class='input' placeholder="Enter todo title..." type="text">
+<button class="add">Add</button>
+
+<div>
+    <button class="all">All</button>
+    <button class="filterBtn" data-status="true">Completed</button>
+    <button class="filterBtn" data-status="false">Not Completed</button>
+</div>
+
+<ul class='list'></ul>
+
+<script>
+    const addBtn = document.querySelector(".add");
+    const input = document.querySelector(".input");
+    const list = document.querySelector(".list");
+    const filterBtns = document.querySelectorAll(".filterBtn");
+    const allBtn = document.querySelector(".all");
+
+    const fetchTodos = async (status) => {
+        try {
+            let apiUrl = "http://localhost:8080/api/v1/todos";
+            if (status !== undefined) {
+                apiUrl += `?status=${status}`;
+            }
+            const response = await fetch(apiUrl);
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error("Error fetching data:", error);
+            return [];
+        }
+    };
+
+    const showItems = async (status) => {
+        list.innerHTML = "";
+        const todoList = await fetchTodos(status);
+
+        if (todoList.length === 0) {
+            const info = document.createElement("p");
+            info.textContent = "Danh sách công việc trống!";
+            list.appendChild(info);
+        } else {
+            todoList.forEach((e) => {
+                const li = document.createElement("li");
+
+                const checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+                checkbox.checked = e.status;
+                checkbox.addEventListener("change", async () => {
+                    e.status = checkbox.checked;
+                    await updateTodoStatus(e.id, e.status);
+                    showItems(status);
+                });
+
+                const span = document.createElement("span");
+                span.classList.add("title");
+                span.textContent = e.title;
+                if (e.status) span.classList.add("checked");
+
+                const editButton = document.createElement("button");
+                editButton.textContent = "Edit";
+                editButton.addEventListener("click", async () => {
+                    let newTitle = window.prompt("Nhập tiêu đề mới:", e.title);
+                    if (newTitle.trim() === "") {
+                        alert("Tên công việc không được để trống!");
+                    } else {
+                        e.title = newTitle.trim();
+                        await updateTodoTitle(e.id, e.title);
+                        showItems(status);
+                    }
+                });
+
+                const deleteButton = document.createElement("button");
+                deleteButton.textContent = "Delete";
+                deleteButton.addEventListener("click", async () => {
+                    if (window.confirm("Bạn có chắc chắn muốn xóa?")) {
+                        await deleteTodoById(e.id);
+                        showItems(status);
+                    }
+                });
+
+                li.appendChild(checkbox);
+                li.appendChild(span);
+                li.appendChild(editButton);
+                li.appendChild(deleteButton);
+                list.appendChild(li);
+            });
+        }
+    };
+
+    const updateTodoStatus = async (id, status) => {
+        try {
+            await fetch(`http://localhost:8080/api/v1/todos/${id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ status: status })
+            });
+        } catch (error) {
+            console.error("Error updating status:", error);
+        }
+    };
+
+    const updateTodoTitle = async (id, title) => {
+        try {
+            await fetch(`http://localhost:8080/api/v1/todos/${id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ title: title })
+            });
+        } catch (error) {
+            console.error("Error updating title:", error);
+        }
+    };
+
+    const deleteTodoById = async (id) => {
+        try {
+            await fetch(`http://localhost:8080/api/v1/todos/${id}`, {
+                method: "DELETE"
+            });
+        } catch (error) {
+            console.error("Error deleting todo:", error);
+        }
+    };
+
+    addBtn.addEventListener("click", async () => {
+        const title = input.value.trim();
+        if (title === "") {
+            alert("Tên công việc không được để trống!");
+            input.value = "";
+            return;
+        }
+
+        try {
+            await fetch("http://localhost:8080/api/v1/todos", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ title: title })
+            });
+            input.value = "";
+            showItems(status);
+        } catch (error) {
+            console.error("Error creating todo:", error);
+        }
+    });
+
+    filterBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+            const status = btn.getAttribute("data-status");
+            showItems(status);
+        });
+    });
+
+    allBtn.addEventListener("click", () => {
+        showItems();
+    })
+
+    showItems();
+</script>
+</body>
+</html>
