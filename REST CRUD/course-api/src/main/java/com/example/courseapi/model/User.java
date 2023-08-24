@@ -1,14 +1,16 @@
 package com.example.courseapi.model;
 
-import org.springframework.stereotype.Component;
+import lombok.*;
 
-@Component
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class User {
-    public User() {
-        System.out.print("User has been created!");
-    }
-
-    public void run() {
-        System.out.print("User are running!!!");
-    }
+    private Integer id;
+    private String name;
+    private String email;
+    private String phone;
+    private String avatar;
 }
