@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{/fragments/layout :: main-fragment(
+~{:: title},
+~{:: #detail-course-container}
+)}">>
 
 <head>
     <meta charset="UTF-8">
@@ -19,23 +22,8 @@
 </head>
 
 <body>
-    <div class="header d-flex align-items-center">
-        <div class="container-fluid">
-            <div class="d-flex justify-content-start align-items-center">
-                <div class="logo">
-                    <a href="./course-list.html">
-                        <img src="https://techmaster.vn/resources/image/logo-techmaster/white/white_200x74.png" alt="logo">
-                    </a>
-                </div>
-                <div class="menu">
-                    <a class="text-white text-uppercase ms-5" href="?type=onlab">Phòng lab</a>
-                    <a class="text-white text-uppercase ms-3" href="?type=online">Trực tuyến</a>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="course-container mt-5">
+    <div class="course-container mt-5" id="detail-course-container">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-10">
