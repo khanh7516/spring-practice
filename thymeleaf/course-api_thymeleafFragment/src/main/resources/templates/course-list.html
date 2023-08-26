@@ -22,14 +22,14 @@
     <div class="container-fluid">
         <div class="d-flex justify-content-start align-items-center">
             <div class="logo">
-                <a th:href="@{/api/v2/courses}">
+                <a href="./course-list.html">
                     <img src="https://techmaster.vn/resources/image/logo-techmaster/white/white_200x74.png"
                          alt="logo">
                 </a>
             </div>
             <div class="menu">
-                <a class="text-white text-uppercase ms-5" th:href="@{/api/v2/courses(type='onlab')}">Phòng lab</a>
-                <a class="text-white text-uppercase ms-3" th:href="@{/api/v2/courses(type='online')}">Trực tuyến</a>
+                <a class="text-white text-uppercase ms-5" href="?type=onlab">Phòng lab</a>
+                <a class="text-white text-uppercase ms-3" href="?type=online">Trực tuyến</a>
             </div>
         </div>
     </div>
@@ -62,7 +62,7 @@
                 </div>
                 <div class="course-list row">
                     <div class="col-md-4" th:each="course : ${courseList}">
-                        <a th:href="@{/api/v2/courses/{id} (id = ${course.id})}">
+                        <a th:href="@{/courses/{id} (id = ${course.id})}">
                             <div class="course-item shadow-sm rounded mb-4">
                                 <div class="course-item-image">
                                     <img th:src="${course.thumbnail}"

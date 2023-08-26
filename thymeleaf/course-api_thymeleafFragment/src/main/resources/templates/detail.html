@@ -23,13 +23,13 @@
         <div class="container-fluid">
             <div class="d-flex justify-content-start align-items-center">
                 <div class="logo">
-                    <a th:href="@{/api/v2/courses}">
+                    <a href="./course-list.html">
                         <img src="https://techmaster.vn/resources/image/logo-techmaster/white/white_200x74.png" alt="logo">
                     </a>
                 </div>
                 <div class="menu">
-                    <a class="text-white text-uppercase ms-5" th:href="@{/api/v2/courses(type='onlab')}">Phòng lab</a>
-                    <a class="text-white text-uppercase ms-3" th:href="@{/api/v2/courses(type='online')}">Trực tuyến</a>
+                    <a class="text-white text-uppercase ms-5" href="?type=onlab">Phòng lab</a>
+                    <a class="text-white text-uppercase ms-3" href="?type=online">Trực tuyến</a>
                 </div>
             </div>
         </div>
@@ -42,7 +42,7 @@
                     <div class="mb-4">
                         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a th:href="@{/api/v2/courses}">Khóa học</a></li>
+                                <li class="breadcrumb-item"><a href="./course-list.html">Khóa học</a></li>
                                 <li class="breadcrumb-item active" aria-current="page" th:text="${courseResponse.course.name}">Lập trình di động IOS Swift online</li>
                             </ol>
                         </nav>

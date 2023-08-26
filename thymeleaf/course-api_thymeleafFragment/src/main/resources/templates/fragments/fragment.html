@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div th:fragment="topiclist" class="topic-list">
+    <div th:each="topic : ${topicList}" class="topic-item input-group d-flex align-items-center mb-1">
+        <input type="radio" th:value="${topic}" th:id="${topic}" name="topic" />
+        <label th:for="${topic}" class="ms-2 fs-5" th:text="${topic}">Lập trình Backend</label>
+    </div>
+</div>
+
+</body>
+</html>
