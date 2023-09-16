@@ -23,4 +23,10 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
     long countByName(String name);
 
     Optional<Student> findFirstByAgeLessThan(Integer age);
+
+
+    //Update
+    //Delete
+
+    //
 }
