@@ -21,6 +21,7 @@
             <th>Type</th>
             <th>CreateAt</th>
             <th></th>
+            <th></th>
         </tr>
         </thead>
 
@@ -28,10 +29,9 @@
         <tr th:each="file : ${files}">
             <td th:text="${file.id}"></td>
             <td th:text="${file.type}"></td>
-            <td th:text="${file.createdAt}"></td>
+            <td th:text="${#temporals.format(file.createdAt, 'dd/MM/yyyy')}"></td>
             <td>
-                <button class="btn btn-success view-detail" th:attr="data-id=${file.id}">Xem chi tiết</button>
-
+                <a th:href="@{/api/v1/files/{id} (id=${file.id})}" target="_blank">Xem chi tiết</a>
             </td>
             <td>
                 <button class="btn btn-danger delete-user" th:attr="data-id=${file.id}">Xóa</button>
@@ -49,7 +49,7 @@
 
 <script th:inline="javascript" >
     const deleteButtons = document.querySelectorAll(".delete-user");
-    const viewDetailButtons = document.querySelectorAll(".view-detail");
+    // const viewDetailButtons = document.querySelectorAll(".view-detail");
 
     const currentURL = window.location.href;
     const parts = currentURL.split("/");
@@ -66,7 +66,7 @@
                 "Content-Type": "multipart/form-data"
             }
         })
-            .then(function (response) {
+            .then(function () {
                 location.reload();
                 alert("File uploaded successfully");
             })
@@ -77,11 +77,11 @@
             });
     });
 
-    viewDetailButtons.forEach(function (button) {
-        button.addEventListener("click", function () {
-            window.location.href = `/api/v1/files/${userId}`;
-        });
-    });
+    // viewDetailButtons.forEach(function (button) {
+    //     button.addEventListener("click", function () {
+    //         window.location.href = `/api/v1/files/${userId}`;
+    //     });
+    // });
 
     deleteButtons.forEach(function (button) {
         button.addEventListener("click", function () {
@@ -89,8 +89,8 @@
             if (confirm("Bạn có chắc muốn xóa file này?")) {
                 axios.delete(`/api/v1/files/${userId}`)
                     .then(function () {
-                        button.closest("tr").remove();
-                        alert("Xóa thành công!");
+                            button.closest("tr").remove();
+                            alert("Xóa thành công!");
                     })
                     .catch(function (error) {
                         console.error(error);

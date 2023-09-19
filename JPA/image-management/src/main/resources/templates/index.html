@@ -23,8 +23,11 @@
         <tr th:each="user : ${users}">
             <td th:text="${user.id}"></td>
             <td th:text="${user.name}"></td>
+<!--            <td>-->
+<!--                <button class="btn btn-success view-detail" th:attr="data-id=${user.id}">Xem chi tiết</button>-->
+<!--            </td>-->
             <td>
-                <button class="btn btn-success view-detail" th:attr="data-id=${user.id}">Xem chi tiết</button>
+                <a th:href="@{/users/{id}/files (id=${user.id})}" target="_blank">Xem chi tiết</a>
             </td>
         </tr>
         </tbody>
